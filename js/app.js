@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const vti = taskInput.value.trim();
         if (vti !== '') {
             const task = {
-                id: Date.now,
+                id: Date.now(),
                 text: vti,
                 complete: false
             };
@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
         );
+    }
+
+    window.deleteTask = function (id) {
+        tasks = tasks.filter(task => task.id !== id);
+        renderTasks();  
     }
 
 });
