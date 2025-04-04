@@ -4,16 +4,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskList = document.getElementById('task-list');
 
     let tasks = [];
+    let isEditing = false;
+    let editingId = null;
+
     taskForm.addEventListener('click', (e) => {
         const vti = taskInput.value.trim();
         if (vti !== '') {
-            const task = {
-                id: Date.now(),
-                text: vti,
-                complete: false
-            };
-            tasks.push(task);
-            console.log(tasks);
+            if (isEditing) {
+                tasks = tasks.map(task =>
+                    task.id === editingId ? {
+                        ...task, text: vti
+                    } : task);
+                isEditing = false;
+                editingId = null;
+                taskForm.innerText = "Agregar";
+            }
+            else {
+                const task = {
+                    id: Date.now(),
+                    text: vti,
+                    complete: false
+                };
+                tasks.push(task);
+                console.log(tasks);
+            }
             renderTasks();
             taskInput.value = '';
         }
@@ -29,7 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.innerHTML =
                     '<span>' + task.text + '</span>' +
                     '<div>' +
-                    '<button onclick="deleteTask(' + task.id + ')">' +
+                    '<button class="edit-btn" onclick="editTask(' + task.id + ')">' +
+                    'Editar </button>' +
+                    '<button class="delete-btn" onclick="deleteTask(' + task.id + ')">' +
                     'Eliminar </button>' +
                     '</div>';
                 taskList.appendChild(li);
@@ -40,7 +56,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.deleteTask = function (id) {
         tasks = tasks.filter(task => task.id !== id);
-        renderTasks();  
+        renderTasks();
+    }
+
+    window.editTask = function (id) {
+        console.log(id);
+        const et = tasks.find(t => t.id === id);
+        if (et) {
+            taskInput.value = et.text;
+            taskForm.innerText = "Guardar";
+            isEditing = true;
+            editingId = et.id;
+        }
     }
 
 });

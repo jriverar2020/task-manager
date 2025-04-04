@@ -31,3 +31,20 @@ li {
     padding: 1rem;
     border-radius: 5px;
 }
+
+.edit-btn {
+    margin-right: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    border-color: white;
+    background-color: blue;
+    color: #f9f9f9;
+}
+
+.delete-btn {
+    background-color: red;
+    border-radius: 5px;
+    padding: 5px;
+    border-color: white;
+    color: #f9f9f9;
+}
