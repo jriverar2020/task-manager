@@ -32,6 +32,10 @@ li {
     border-radius: 5px;
 }
 
+.task-ready{
+    background:  #88ff82;
+}
+
 .edit-btn {
     margin-right: 5px;
     border-radius: 5px;
@@ -43,6 +47,14 @@ li {
 
 .delete-btn {
     background-color: red;
+    border-radius: 5px;
+    padding: 5px;
+    border-color: white;
+    color: #f9f9f9;
+}
+
+.complete-btn {
+    background-color: rgb(59, 161, 0);
     border-radius: 5px;
     padding: 5px;
     border-color: white;
