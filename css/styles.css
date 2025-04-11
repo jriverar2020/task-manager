@@ -125,3 +125,8 @@ li {
     font-size: 14px;
     transition: border-color 0.3s;
 }
+
+.req-field {
+    color: red;
+    font-weight: bold;
+}
