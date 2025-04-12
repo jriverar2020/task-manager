@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const taskForm = document.getElementById('task-form');
+    //const taskForm = document.getElementById('task-form');
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
 
     let tasks = [];
     let isEditing = false;
     let editingId = null;
-
+/*
     taskForm.addEventListener('click', (e) => {
         const vti = taskInput.value.trim();
         if (vti !== '') {
@@ -32,8 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
             taskInput.value = '';
         }
     });
-
+*/
     function renderTasks() {
+        console.log("Runing");
+        
+        const user_id = 1;
+
+        fetch('server/task/index.php?user_id=' + user_id)
+            .then(response => response.json())
+            .then(tks => {
+                console.log(tks);
+            });
+
         taskList.innerHTML = '';
         tasks.forEach(
             task => {
@@ -43,19 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (task.complete) {
                     li.className = 'task-ready';
                     li.innerHTML =
-                    '<span>' + task.text + '</span>';
+                        '<span>' + task.text + '</span>';
                 }
                 else {
                     li.innerHTML =
-                    '<span>' + task.text + '</span>' +
-                    '<div>' +
-                    '<button class="complete-btn" onclick="completeTask(' + task.id + ')">' +
-                    'Completar </button>' +
-                    '<button class="edit-btn" onclick="editTask(' + task.id + ')">' +
-                    'Editar </button>' +
-                    '<button class="delete-btn" onclick="deleteTask(' + task.id + ')">' +
-                    'Eliminar </button>' +
-                    '</div>';
+                        '<span>' + task.text + '</span>' +
+                        '<div>' +
+                        '<button class="complete-btn" onclick="completeTask(' + task.id + ')">' +
+                        'Completar </button>' +
+                        '<button class="edit-btn" onclick="editTask(' + task.id + ')">' +
+                        'Editar </button>' +
+                        '<button class="delete-btn" onclick="deleteTask(' + task.id + ')">' +
+                        'Eliminar </button>' +
+                        '</div>';
                 }
                 taskList.appendChild(li);
             }
@@ -79,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
     window.completeTask = function (id) {
         tasks = tasks.map(task =>
             task.id === id ? {
@@ -87,5 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } : task);
         renderTasks();
     }
-
+    
+    renderTasks();
 });
+
