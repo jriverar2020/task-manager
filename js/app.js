@@ -6,43 +6,79 @@ document.addEventListener('DOMContentLoaded', () => {
     let tasks = [];
     let isEditing = false;
     let editingId = null;
-/*
-    taskForm.addEventListener('click', (e) => {
-        const vti = taskInput.value.trim();
-        if (vti !== '') {
-            if (isEditing) {
-                tasks = tasks.map(task =>
-                    task.id === editingId ? {
-                        ...task, text: vti
-                    } : task);
-                isEditing = false;
-                editingId = null;
-                taskForm.innerText = "Agregar";
+    /*
+        taskForm.addEventListener('click', (e) => {
+            const vti = taskInput.value.trim();
+            if (vti !== '') {
+                if (isEditing) {
+                    tasks = tasks.map(task =>
+                        task.id === editingId ? {
+                            ...task, text: vti
+                        } : task);
+                    isEditing = false;
+                    editingId = null;
+                    taskForm.innerText = "Agregar";
+                }
+                else {
+                    const task = {
+                        id: Date.now(),
+                        text: vti,
+                        complete: false
+                    };
+                    tasks.push(task);
+                    console.log(tasks);
+                }
+                renderTasks();
+                taskInput.value = '';
             }
-            else {
-                const task = {
-                    id: Date.now(),
-                    text: vti,
-                    complete: false
-                };
-                tasks.push(task);
-                console.log(tasks);
-            }
-            renderTasks();
-            taskInput.value = '';
-        }
-    });
-*/
+        });
+    */
     function renderTasks() {
         console.log("Runing");
-        
-        const user_id = 1;
+        fetch('server/user/session_info.php')
+            .then(res => res.json())
+            .then(data => {
+                if (data.user_id) {
+                    console.log('Sesión activa para usuario:', data.user_id);
+                    fetch('server/task/index.php?user_id=' + data.user_id)
+                        .then(response => response.json())
+                        .then(tks => {
+                            console.log(tks);
+                            tks.forEach(
+                                task => {
+                                    console.log(task);
 
-        fetch('server/task/index.php?user_id=' + user_id)
-            .then(response => response.json())
-            .then(tks => {
-                console.log(tks);
+                                    const li = document.createElement('li');
+                                    if (task.completed) {
+                                        li.className = 'task-ready';
+                                        li.innerHTML =
+                                            '<span>' + task.title + '</span>';
+                                    }
+                                    else {
+                                        li.innerHTML =
+                                            '<span>' + task.title + '</span>' +
+                                            '<div>' +
+                                            '<button class="complete-btn" onclick="completeTask(' + task.id + ')">' +
+                                            'Completar </button>' +
+                                            '<button class="edit-btn" onclick="editTask(' + task.id + ')">' +
+                                            'Editar </button>' +
+                                            '<button class="delete-btn" onclick="deleteTask(' + task.id + ')">' +
+                                            'Eliminar </button>' +
+                                            '</div>';
+                                    }
+                                    taskList.appendChild(li);
+                                }
+                            );
+                        });
+                } else {
+                    console.warn(data.error);
+                    window.location.href = 'login.html';
+                }
             });
+
+
+
+
 
         taskList.innerHTML = '';
         tasks.forEach(
@@ -96,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } : task);
         renderTasks();
     }
-    
+
     renderTasks();
 });
 
