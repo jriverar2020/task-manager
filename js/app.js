@@ -72,7 +72,84 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                 } else {
                     console.warn(data.error);
-                    window.location.href = 'login.html';
+                    window.location.href = 'login.php';
+                }
+            });
+
+
+
+
+
+        taskList.innerHTML = '';
+        tasks.forEach(
+            task => {
+                console.log(task);
+
+                const li = document.createElement('li');
+                if (task.complete) {
+                    li.className = 'task-ready';
+                    li.innerHTML =
+                        '<span>' + task.text + '</span>';
+                }
+                else {
+                    li.innerHTML =
+                        '<span>' + task.text + '</span>' +
+                        '<div>' +
+                        '<button class="complete-btn" onclick="completeTask(' + task.id + ')">' +
+                        'Completar </button>' +
+                        '<button class="edit-btn" onclick="editTask(' + task.id + ')">' +
+                        'Editar </button>' +
+                        '<button class="delete-btn" onclick="deleteTask(' + task.id + ')">' +
+                        'Eliminar </button>' +
+                        '</div>';
+                }
+                taskList.appendChild(li);
+            }
+
+        );
+    }
+
+    function loadCategories(){
+
+        console.log("Runing");
+        fetch('server/category/filter_by_user.php?user_id=3')
+            .then(res => res.json())
+            .then(data => {
+                if (data.user_id) {
+                    console.log('Sesión activa para usuario:', data.user_id);
+                    fetch('server/task/index.php?user_id=' + data.user_id)
+                        .then(response => response.json())
+                        .then(tks => {
+                            console.log(tks);
+                            tks.forEach(
+                                task => {
+                                    console.log(task);
+
+                                    const li = document.createElement('li');
+                                    if (task.completed) {
+                                        li.className = 'task-ready';
+                                        li.innerHTML =
+                                            '<span>' + task.title + '</span>';
+                                    }
+                                    else {
+                                        li.innerHTML =
+                                            '<span>' + task.title + '</span>' +
+                                            '<div>' +
+                                            '<button class="complete-btn" onclick="completeTask(' + task.id + ')">' +
+                                            'Completar </button>' +
+                                            '<button class="edit-btn" onclick="editTask(' + task.id + ')">' +
+                                            'Editar </button>' +
+                                            '<button class="delete-btn" onclick="deleteTask(' + task.id + ')">' +
+                                            'Eliminar </button>' +
+                                            '</div>';
+                                    }
+                                    taskList.appendChild(li);
+                                }
+                            );
+                        });
+                } else {
+                    console.warn(data.error);
+                    window.location.href = 'login.php';
                 }
             });
 

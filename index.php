@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -12,7 +15,7 @@
 
 <body>
     <main>
-        <h1>Gestor de tareas</h1>
+        <h1>Gestor de tareas del usuario <?php echo $_SESSION['user_name']; ?></h1>
         <form action="server/task/create.php" method="post" class="my-form">
             <label for="title" class="field">
                 <span>
@@ -33,13 +36,16 @@
                 <span>¿Is completed?</span>
                 <input !checked type="checkbox" name="completed" placeholder="completed" id="completed" />
             </label>
+            <!--
             <label for="user_id" class="field">
                 <span>
                     <span class="req-field">*</span>
                     User id:
                 </span>
-                <input type="number" name="user_id" placeholder="user_id" id="user_id" required />
-            </label>
+-->
+            <input type="hidden" name="user_id" placeholder="user_id" id="user_id" required
+                value="<?php echo $_SESSION['user_id']; ?>" />
+            <!--</label>-->
             <label for="category_id" class="field">
                 <span>
                     <span class="req-field">*</span>
