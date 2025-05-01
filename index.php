@@ -14,6 +14,11 @@ session_start();
 </head>
 
 <body>
+    <form action="server/user/logout.php" method="get">
+        <button type="submit" class="delete-btn left-align">Cerrar sesión</button>
+    </form>
+
+    <br><br><br>
     <main>
         <h1>Gestor de tareas del usuario <?php echo $_SESSION['user_name']; ?></h1>
         <form action="server/task/create.php" method="post" class="my-form">
@@ -55,7 +60,7 @@ session_start();
                 <input type="number" name="category_id" placeholder="category_id" id="category_id" required />
                 -->
                 <select id="category-list" name="category_id" class="form-control form-control-sm" required>
-                    
+
                 </select>
             </label>
             <button type="submit">Enviar</button>
