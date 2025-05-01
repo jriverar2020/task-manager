@@ -34,7 +34,7 @@ session_start();
             </label>
             <label for="completed" class="field cbx-g">
                 <span>¿Is completed?</span>
-                <input !checked type="checkbox" name="completed" placeholder="completed" id="completed" />
+                <input !checked type="checkbox" name="completed" placeholder="completed" id="completed" value="false" />
             </label>
             <!--
             <label for="user_id" class="field">
@@ -49,9 +49,14 @@ session_start();
             <label for="category_id" class="field">
                 <span>
                     <span class="req-field">*</span>
-                    Category id:
+                    Category:
                 </span>
+                <!--
                 <input type="number" name="category_id" placeholder="category_id" id="category_id" required />
+                -->
+                <select id="category-list" name="category_id" class="form-control form-control-sm" required>
+                    
+                </select>
             </label>
             <button type="submit">Enviar</button>
         </form>
