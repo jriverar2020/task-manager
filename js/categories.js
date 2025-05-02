@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                 } else {
                     console.warn(data.error);
-                    window.location.href = 'login.php';
+                    window.location.href = '../login.php';
                 }
             });
     }

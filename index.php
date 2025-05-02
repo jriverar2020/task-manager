@@ -17,7 +17,9 @@ session_start();
     <form action="server/user/logout.php" method="get">
         <button type="submit" class="delete-btn left-align">Cerrar sesión</button>
     </form>
-
+    <a href="pages/categories.php">
+    <button type="submit" class="edit-btn right-align">Categorías</button>
+    </a>
     <br><br><br>
     <main>
         <h1>Gestor de tareas del usuario <?php echo $_SESSION['user_name']; ?></h1>

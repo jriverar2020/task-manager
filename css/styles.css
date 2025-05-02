@@ -139,3 +139,10 @@ li {
     width: 150px;
     padding: 10px;
 }
+
+.right-align {
+    position: absolute;
+    left: 0px;
+    width: 150px;
+    padding: 10px;
+}
