@@ -1,8 +1,8 @@
 <?php
 require '../commons/db.php';
 
-var_dump($_SERVER['REQUEST_METHOD']);
-var_dump($_POST);
+//var_dump($_SERVER['REQUEST_METHOD']);
+//var_dump($_POST);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (
         trim($_POST['name']) != '' &&
@@ -16,15 +16,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 "name" => $_POST["name"],
                 "user_id" => $_POST["user_id"]
             ]);
+
+            echo json_encode(
+                [
+                    'success' => true,
+                    'message' => 'Categoría creada correctamente'
+                ]
+            );
+
         } catch (PDOException $e) {
-            echo 'Error en la conexión ' . $e->getMessage();
+            //echo 'Error en la conexión ' . $e->getMessage();
+            echo json_encode(
+                [
+                    'success' => false,
+                    'message' => 'Error: '
+                ]
+            );
             exit();
         }
-
-        header("Location: /task-manager/pages/categories.php");
-
+        //header("Location: /task-manager/pages/categories.php");
     } else {
-        echo 'Nooooooooooo pasa';
+        echo json_encode(
+            [
+                'success' => false,
+                'message' => 'Error todos los campos son obligatorios '
+            ]
+        );
     }
 }
 

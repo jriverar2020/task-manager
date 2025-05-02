@@ -15,7 +15,7 @@ session_start();
 
 <body>
     <h2>Categorías del usuario <?php echo $_SESSION['user_name']; ?></h2>
-    <form action="../server/category/create.php" id="category-form" method="POST">
+    <form id="category-form">
         <label for="name" class="field">
             <span>
                 <span class="req-field">*</span>

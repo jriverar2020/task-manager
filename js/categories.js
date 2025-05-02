@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadCategories() {
 
+        categoryList.innerHTML = '';
         console.log("Runing");
         fetch('/task-manager/server/user/session_info.php')
             .then(res => res.json())
@@ -39,4 +40,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadCategories();
 
+    document.getElementById('category-form').addEventListener('submit',
+        function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const message = document.getElementById('message');
+
+            fetch('/task-manager/server/category/create.php',
+                {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.success) {
+                        message.textContent = data.message;
+                        message.style.color = 'green';
+                        this.reset();
+                        loadCategories();
+                    }
+                    else {
+                        message.textContent = data.message;
+                        message.style.color = 'orange';
+                    }
+                })
+                .catch(err => {
+                    message.textContent = err.message;
+                    message.style.color = 'red';
+                })
+        });
+
 });
+
